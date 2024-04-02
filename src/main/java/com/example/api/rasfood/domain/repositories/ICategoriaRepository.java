@@ -1,6 +1,6 @@
-package com.example.api.rasfood.repositories;
+package com.example.api.rasfood.domain.repositories;
 
-import com.example.api.rasfood.entities.Categoria;
+import com.example.api.rasfood.domain.entities.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

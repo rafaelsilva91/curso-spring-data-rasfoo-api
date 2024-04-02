@@ -1,7 +1,7 @@
 package com.example.api.rasfood.controllers;
 
-import com.example.api.rasfood.entities.Endereco;
-import com.example.api.rasfood.repositories.IEnderecoRepository;
+import com.example.api.rasfood.domain.entities.Endereco;
+import com.example.api.rasfood.domain.repositories.IEnderecoRepository;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;

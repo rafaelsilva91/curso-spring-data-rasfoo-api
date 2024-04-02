@@ -1,7 +1,7 @@
 package com.example.api.rasfood.controllers;
 
-import com.example.api.rasfood.entities.Categoria;
-import com.example.api.rasfood.repositories.ICategoriaRepository;
+import com.example.api.rasfood.domain.entities.Categoria;
+import com.example.api.rasfood.domain.repositories.ICategoriaRepository;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;

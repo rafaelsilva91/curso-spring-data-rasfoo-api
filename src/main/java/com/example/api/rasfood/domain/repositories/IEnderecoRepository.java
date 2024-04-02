@@ -1,7 +1,6 @@
-package com.example.api.rasfood.repositories;
+package com.example.api.rasfood.domain.repositories;
 
-import com.example.api.rasfood.entities.Endereco;
-import org.springframework.context.annotation.Bean;
+import com.example.api.rasfood.domain.entities.Endereco;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

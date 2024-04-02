@@ -1,7 +1,9 @@
 package com.example.api.rasfood.controllers;
 
-import com.example.api.rasfood.entities.Cardapio;
-import com.example.api.rasfood.repositories.ICardapioRepository;
+import com.example.api.rasfood.domain.entities.Cardapio;
+import com.example.api.rasfood.domain.repositories.ICardapioRepository;
+import com.example.api.rasfood.domain.repositories.projection.CardapioProjection;
+import com.example.api.rasfood.dto.CardapioDto;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
@@ -40,6 +42,18 @@ public class CardapioController {
     public ResponseEntity<List<Cardapio>> consultarPorCategoria(@PathVariable final Integer categoriaId){
         List<Cardapio> cardapioList = this.repository.findAllByCategoria(categoriaId);
         return ResponseEntity.status(HttpStatus.OK).body(cardapioList);
+    }
+
+    @GetMapping("/categoria/testeNativeQuery/cat={categoriaId}")
+    public ResponseEntity<List<CardapioProjection>> consultarPorCategoriaID(@PathVariable final Integer categoriaId){
+        List<CardapioProjection> cardapioList = this.repository.findAllByCategoriasId(categoriaId);
+        return ResponseEntity.status(HttpStatus.OK).body(cardapioList);
+    }
+
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<CardapioDto>> findAllByNome(@PathVariable final String nome){
+        List<CardapioDto> cardapioDtoList = this.repository.findAllByNome(nome);
+        return ResponseEntity.status(HttpStatus.OK).body(cardapioDtoList);
     }
 
     @PatchMapping("/{id}")
