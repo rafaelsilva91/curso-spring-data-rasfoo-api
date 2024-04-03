@@ -6,6 +6,7 @@ import com.example.api.rasfood.dto.CardapioDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -13,12 +14,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ICardapioRepository extends JpaRepository<Cardapio, Integer>, PagingAndSortingRepository<Cardapio, Integer> {
+public interface ICardapioRepository extends JpaRepository<Cardapio, Integer>,
+        PagingAndSortingRepository<Cardapio, Integer>,
+        JpaSpecificationExecutor<Cardapio> {
 
 
-    @Query(value =" SELECT * FROM CARDAPIO C" +
-                  " WHERE C.CATEGORIA_ID = ?1" +
-                  " AND C.DISPONIVEL = true", nativeQuery = true, countQuery = "SELECT count(*) FROM cardapio")
+    @Query(value = " SELECT * FROM CARDAPIO C" +
+            " WHERE C.CATEGORIA_ID = ?1" +
+            " AND C.DISPONIVEL = true", nativeQuery = true, countQuery = "SELECT count(*) FROM cardapio")
     Page<Cardapio> findAllByCategoria(final Integer categoria, final Pageable pageable);
 
     @Query("SELECT new com.example.api.rasfood.dto.CardapioDto(" +
@@ -42,7 +45,9 @@ public interface ICardapioRepository extends JpaRepository<Cardapio, Integer>, P
             " ON c.categoria_id = cat.id" +
             " WHERE 1 = 1" +
             " AND c.disponivel = true" +
-            " AND c.categoria_id = ?1", nativeQuery = true, countQuery = "SELECT count(*) FROM cardapio")
+            " AND c.categoria_id = :categoria",
+            nativeQuery = true,
+            countQuery = "SELECT count(*) FROM cardapio")
     Page<CardapioProjection> findAllByCategoriasId(final Integer categoria, final Pageable pageable);
 
 }
