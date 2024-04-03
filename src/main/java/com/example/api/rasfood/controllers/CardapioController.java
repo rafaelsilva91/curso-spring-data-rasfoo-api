@@ -6,6 +6,10 @@ import com.example.api.rasfood.domain.repositories.projection.CardapioProjection
 import com.example.api.rasfood.dto.CardapioDto;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +30,10 @@ public class CardapioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Cardapio>> findAll(){
-        List<Cardapio> cardapioList = this.repository.findAll();
+    public ResponseEntity<Page<Cardapio>> findAll(@RequestParam("page") Integer page,
+                                                  @RequestParam("size") Integer size){
+        Pageable pageable = PageRequest.of(page,size);
+        Page<Cardapio> cardapioList = this.repository.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(cardapioList);
     }
 
@@ -39,20 +45,29 @@ public class CardapioController {
     }
 
     @GetMapping("/categoria/{categoriaId}/disponivel")
-    public ResponseEntity<List<Cardapio>> consultarPorCategoria(@PathVariable final Integer categoriaId){
-        List<Cardapio> cardapioList = this.repository.findAllByCategoria(categoriaId);
+    public ResponseEntity<Page<Cardapio>> consultarPorCategoria(@PathVariable final Integer categoriaId,
+                                                                @RequestParam("page") Integer page,
+                                                                @RequestParam("size") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Cardapio> cardapioList = this.repository.findAllByCategoria(categoriaId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(cardapioList);
     }
 
     @GetMapping("/categoria/testeNativeQuery/cat={categoriaId}")
-    public ResponseEntity<List<CardapioProjection>> consultarPorCategoriaID(@PathVariable final Integer categoriaId){
-        List<CardapioProjection> cardapioList = this.repository.findAllByCategoriasId(categoriaId);
+    public ResponseEntity<Page<CardapioProjection>> consultarPorCategoriaID(@PathVariable final Integer categoriaId,
+                                                                            @RequestParam("page") Integer page,
+                                                                            @RequestParam("size") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CardapioProjection> cardapioList = this.repository.findAllByCategoriasId(categoriaId,pageable);
         return ResponseEntity.status(HttpStatus.OK).body(cardapioList);
     }
 
     @GetMapping("/nome/{nome}")
-    public ResponseEntity<List<CardapioDto>> findAllByNome(@PathVariable final String nome){
-        List<CardapioDto> cardapioDtoList = this.repository.findAllByNome(nome);
+    public ResponseEntity<Page<CardapioDto>> findAllByNome(@PathVariable final String nome,
+                                                           @RequestParam("page") Integer page,
+                                                           @RequestParam("size") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CardapioDto> cardapioDtoList = this.repository.findAllByNome(nome, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(cardapioDtoList);
     }
 
