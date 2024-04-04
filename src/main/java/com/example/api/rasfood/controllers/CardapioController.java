@@ -14,9 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -123,6 +126,21 @@ public class CardapioController {
 
         this.repository.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PatchMapping(path = "/{id}/img", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Cardapio> salvarImg(@PathVariable("id") final Integer id,
+                                              @RequestPart final MultipartFile file) throws IOException {
+
+        Optional<Cardapio> cardapioEncontrado = this.repository.findById(id);
+        if(cardapioEncontrado.isPresent()){
+            Cardapio cardapio = cardapioEncontrado.get();
+            cardapio.setImg(file.getBytes());
+
+            return ResponseEntity.status(HttpStatus.OK).body(this.repository.save(cardapioEncontrado.get()));
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
 }

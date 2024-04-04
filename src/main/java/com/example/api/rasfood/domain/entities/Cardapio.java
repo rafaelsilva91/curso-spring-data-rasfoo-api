@@ -35,6 +35,9 @@ public class Cardapio {
     @Column(name = "data_de_registro")
     private LocalDateTime dataDeRegistro = LocalDateTime.now();
 
+    @Lob
+    private byte[] img;
+
     public Cardapio(String nome, String descricao, Boolean disponivel, BigDecimal valor, Categoria categoria) {
         this.nome = nome;
         this.descricao = descricao;
@@ -100,6 +103,14 @@ public class Cardapio {
 
     public void setDataDeRegistro(LocalDateTime dataDeRegistro) {
         this.dataDeRegistro = dataDeRegistro;
+    }
+
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
     }
 
     @Override
